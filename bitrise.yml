@@ -15,7 +15,7 @@ workflows:
               exec bash run.sh
     - deploy-to-bitrise-io@2:
         inputs:
-          - deploy_path: hello.txt
+          - deploy_path: darwin-arm64
 meta:
   bitrise.io:
     stack: osx-xcode-13.4.x

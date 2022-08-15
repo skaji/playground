@@ -1,17 +1,28 @@
 #!/bin/bash
 
-set -x
-
-brew list
-pwd
-env | sort
+set -euxo pipefail
 
 sw_vers
 uname -a
 
-gcc --version
-make --version
+export HOMEBREW_NO_AUTO_UPDATE=1
+brew unlink $(brew list --formula)
+brew install xz coreutils gnu-tar
+brew link --force xz coreutils gnu-tar
 
-echo hello world > hello.txt
+git clone https://github.com/skaji/relocatable-perl
+cd relocatable-perl
+curl -fsSL --compressed -o ~/cpm https://raw.githubusercontent.com/skaji/cpm/main/cpm
+perl ~/cpm install --sudo -g --cpmfile build/cpm.yml
+sudo rm -rf /opt/perl
+sudo install -m 755 -o $USER -g staff -d /opt/perl
+perl build/relocatable-perl-build --prefix /opt/perl --perl_version 5.36.0
+/opt/perl/bin/perl ~/cpm install -g App::cpanminus App::ChangeShebang
+/opt/perl/bin/change-shebang -f /opt/perl/bin/*
+cd ..
 
-cat hello.txt
+gcp -r /opt/perl perl-darwin-arm64
+gtar cf perl-darwin-arm64.tar perl-darwin-arm64
+mkdir darwin-arm64
+gzip -9 --stdout perl-darwin-arm64.tar > darwin-arm64/perl-darwin-arm64.tar.gz
+xz   -9 --stdout perl-darwin-arm64.tar > darwin-arm64/perl-darwin-arm64.tar.xz
