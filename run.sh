@@ -28,3 +28,4 @@ gzip -9 --stdout perl-darwin-arm64.tar > darwin-arm64/perl-darwin-arm64.tar.gz
 xz   -9 --stdout perl-darwin-arm64.tar > darwin-arm64/perl-darwin-arm64.tar.xz
 
 brew install go@1.17
+brew link --force go@1.17
