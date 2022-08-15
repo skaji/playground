@@ -13,7 +13,9 @@ workflows:
           - content: |-
               #!/bin/bash
               exec bash run.sh
-    - deploy-to-bitrise-io@2: {}
+    - deploy-to-bitrise-io@2:
+        inputs:
+          - deploy_path: hello.txt
 meta:
   bitrise.io:
     stack: osx-xcode-13.4.x
