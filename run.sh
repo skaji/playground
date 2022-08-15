@@ -26,3 +26,5 @@ gtar cf perl-darwin-arm64.tar perl-darwin-arm64
 mkdir darwin-arm64
 gzip -9 --stdout perl-darwin-arm64.tar > darwin-arm64/perl-darwin-arm64.tar.gz
 xz   -9 --stdout perl-darwin-arm64.tar > darwin-arm64/perl-darwin-arm64.tar.xz
+
+brew install go@1.17
